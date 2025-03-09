@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agencia de Viajes - Reservas</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a tu archivo CSS personalizado -->
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Agencia de Viajes</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/hoteles/listar}">Hoteles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/vuelos/listar}">Vuelos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/reservas}">Reservas</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <!-- Mensaje flash (opcional) -->
+    <div th:if="${mensaje}" class="alert alert-info" role="alert" th:text="${mensaje}"></div>
+
+    <!-- Lista de Reservas Realizadas -->
+    <h1 class="text-center mb-4">Reservas Realizadas</h1>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nº Reserva</th>
+            <th>Código Hotel</th>
+            <th>Código Vuelo</th>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reserva : ${reservas}">
+            <td th:text="${reserva.id}"></td>
+            <td th:text="${reserva.hotel}"></td>
+            <td th:text="${reserva.vuelo}"></td>
+            <td th:text="${reserva.nombre}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr class="my-5">
+
+    <!-- Formulario para Realizar Nueva Reserva -->
+    <h2 class="text-center mb-4">Realizar Nueva Reserva</h2>
+    <form method="post" th:action="@{/reservas/crear}">
+        <div class="form-group">
+            <label for="selectVuelo">Seleccione un Vuelo:</label>
+            <select id="selectVuelo" name="flightId" class="form-control" required>
+                <option value="">-- Seleccione un Vuelo --</option>
+                <!-- Se itera sobre la lista de vuelos inyectada en el modelo -->
+                <option th:each="vuelo : ${vuelos}"
+                        th:value="${vuelo.id}"
+                        th:text="${vuelo.aerolinea} + ' - ' + ${vuelo.origen} + ' a ' + ${vuelo.destino}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectHotel">Seleccione un Hotel:</label>
+            <select id="selectHotel" name="hotelId" class="form-control" required>
+                <option value="">-- Seleccione un Hotel --</option>
+                <!-- Se itera sobre la lista de hoteles inyectada en el modelo -->
+                <option th:each="hotel : ${hoteles}"
+                        th:value="${hotel.id}"
+                        th:text="${hotel.name} + ' (' + ${hotel.category} + ')'">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputDNI">DNI:</label>
+            <input type="text" class="form-control" id="inputDNI" name="dni" placeholder="Ingrese su DNI" required>
+        </div>
+        <div class="form-group">
+            <label for="inputNombre">Nombre:</label>
+            <input type="text" class="form-control" id="inputNombre" name="user" placeholder="Ingrese su nombre" required>
+        </div>
+        <!-- Se asume que cada reserva es para una persona, en caso contrario ajusta totalPersonas -->
+        <input type="hidden" name="totalPersonas" value="1" />
+        <button type="submit" class="btn btn-primary mt-3">Confirmar Reserva</button>
+    </form>
+</div>
+
+<!-- Enlace a jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

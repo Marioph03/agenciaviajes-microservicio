@@ -1,0 +1,16 @@
+/* index.css */
+
+/* Fondo de la página */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Encabezados */
+h1, h2 {
+    color: #343a40;
+}
+
+/* Espaciado en formularios */
+.form-group {
+    margin-bottom: 1rem;
+}
