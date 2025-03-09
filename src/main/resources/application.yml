@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive  # <-- Configuración clave añadida
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+security:
+  jwt:
+    token:
+      secret-key: clave-secreta
+      expire-length: 3600000
