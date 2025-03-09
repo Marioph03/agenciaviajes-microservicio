@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agencia de Viajes - Vuelos</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Agencia de Viajes</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/vuelos/listar}">Listar Vuelos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/vuelos/agregar}">Agregar Vuelo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/vuelos/reservar}">Reservar Vuelo</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <!-- Sección para listar vuelos -->
+    <div th:if="${vuelos}">
+        <h1 class="text-center mb-4">Lista de Vuelos Disponibles</h1>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Aerolínea</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Precio</th>
+                <th>Plazas Disponibles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vuelo : ${vuelos}">
+                <td th:text="${vuelo.id}"></td>
+                <td th:text="${vuelo.aerolinea}"></td>
+                <td th:text="${vuelo.origen}"></td>
+                <td th:text="${vuelo.destino}"></td>
+                <td th:text="${vuelo.price}"></td>
+                <td th:text="${vuelo.plazas}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sección para reservar un vuelo -->
+    <div th:if="${reservarForm}">
+        <h1 class="text-center mb-4">Reservar Vuelo</h1>
+        <form th:action="@{/vuelos/reservar}" method="post">
+            <div class="form-group">
+                <label for="vueloId">ID del Vuelo:</label>
+                <input type="number" class="form-control" id="vueloId" name="vueloId" required>
+            </div>
+            <div class="form-group">
+                <label for="plazasSolicitadas">Plazas Solicitadas:</label>
+                <input type="number" class="form-control" id="plazasSolicitadas" name="plazasSolicitadas" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Reservar</button>
+        </form>
+    </div>
+
+    <!-- Sección para agregar un nuevo vuelo -->
+    <div th:if="${agregarForm}">
+        <h1 class="text-center mb-4">Agregar Nuevo Vuelo</h1>
+        <form th:action="@{/vuelos/agregar}" method="post">
+            <div class="form-group">
+                <label for="aerolinea">Aerolínea:</label>
+                <input type="text" class="form-control" id="aerolinea" name="aerolinea" required>
+            </div>
+            <div class="form-group">
+                <label for="origen">Origen:</label>
+                <input type="text" class="form-control" id="origen" name="origen" required>
+            </div>
+            <div class="form-group">
+                <label for="destino">Destino:</label>
+                <input type="text" class="form-control" id="destino" name="destino" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="plazas">Plazas Disponibles:</label>
+                <input type="number" class="form-control" id="plazas" name="plazas" required>
+            </div>
+            <button type="submit" class="btn btn-success">Agregar Vuelo</button>
+        </form>
+    </div>
+</div>
+
+<!-- Enlace a jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
