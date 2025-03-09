@@ -1,0 +1,17 @@
+/* style.css */
+
+/* Fondo claro para la página */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Encabezados personalizados */
+h1, h2 {
+    color: #343a40;
+}
+
+/* Ajuste opcional para centrar el formulario en la página de reservas */
+form {
+    max-width: 600px;
+    margin: auto;
+}
